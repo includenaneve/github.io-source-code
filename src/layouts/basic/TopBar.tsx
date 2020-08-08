@@ -14,12 +14,15 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
-import Logo from '@/components/Logo';
+import { default as Logo } from '@/assest/img/logo.png';
 
 const useStyles = makeStyles(() => ({
   root: {},
   avatar: {
     width: 60,
+    height: 60
+  },
+  logo: {
     height: 60
   }
 }));
@@ -39,8 +42,8 @@ const TopBar = ({
       {...rest}
     >
       <Toolbar>
-        <RouterLink to="/">
-          <Logo />
+        <RouterLink to="/aboutMe">
+          <img src={Logo} alt="logo" className={classes.logo}/>
         </RouterLink>
         <Box flexGrow={1} />
         <Hidden mdDown>
