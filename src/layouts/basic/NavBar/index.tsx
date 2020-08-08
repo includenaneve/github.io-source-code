@@ -16,6 +16,7 @@ import {
 
 import NavItem from './NavItem';
 import { default as avatar } from '@/assest/img/avatar.png'
+require('@/layouts/basic/live2d/autoload.js')
 
 const user = {
   avatar: '/static/images/avatars/avatar_6.png',
@@ -24,6 +25,11 @@ const user = {
 };
 
 const useStyles = makeStyles(() => ({
+  '@global': {
+    '#waifu': {
+      zIndex: 99999
+    }
+  },
   mobileDrawer: {
     width: 256
   },
@@ -49,6 +55,10 @@ const NavBar = ({ onMobileClose, openMobile }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
+
+  useEffect(() => {
+
+  }, [])
 
   const content = (
     <Box
@@ -97,6 +107,9 @@ const NavBar = ({ onMobileClose, openMobile }) => {
       </Box>
       <Box flexGrow={1} />
       <Box p={2} m={2} bgcolor="background.dark">
+      </Box>
+      <Box>
+        <script></script>
       </Box>
     </Box>
   );
