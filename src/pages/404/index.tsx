@@ -27,6 +27,14 @@ export default function Page404() {
         <img src={logo404} className={classes.logo}/>
         {/* <Typography className={classes.text}>404页面找不到</Typography> */}
       </Box>
+      <Box display="flex" alignItems="center" flexDirection="column">
+        <img src={logo404} className={classes.logo}/>
+        {/* <Typography className={classes.text}>404页面找不到</Typography> */}
+      </Box>
+      <Box display="flex" alignItems="center" flexDirection="column">
+        <img src={logo404} className={classes.logo}/>
+        {/* <Typography className={classes.text}>404页面找不到</Typography> */}
+      </Box>
     </Box>
   )
 }

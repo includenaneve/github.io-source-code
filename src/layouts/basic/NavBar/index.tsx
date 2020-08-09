@@ -16,6 +16,7 @@ import {
 
 import NavItem from './NavItem';
 import { default as avatar } from '@/assest/img/avatar.png'
+import { default as sideBarNav } from '@/assest/img/sideNavBg.png'
 require('@/layouts/basic/live2d/autoload.js')
 
 const user = {
@@ -24,7 +25,7 @@ const user = {
   name: 'Katarina Smith'
 };
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   '@global': {
     '#waifu': {
       zIndex: 99999
@@ -42,10 +43,29 @@ const useStyles = makeStyles(() => ({
     cursor: 'pointer',
     width: 64,
     height: 64
+  },
+  navBg: {
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100vh',
+    display: 'block',
+    zIndex: 1,
+    position: 'absolute',
+  },
+  navContent: {
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    display: 'block',
+    zIndex: 1,
+    position: 'absolute',
+    background: 'rgba(0, 0, 0, 0.7)'
   }
 }));
 
-const NavBar = ({ onMobileClose, openMobile }) => {
+const NavBar = ({ onMobileClose, openMobile, changeTheme }) => {
   const classes = useStyles();
   const location = useLocation();
 
@@ -61,56 +81,35 @@ const NavBar = ({ onMobileClose, openMobile }) => {
   }, [])
 
   const content = (
-    <Box
-      height="100%"
-      display="flex"
-      flexDirection="column"
-    >
-      <Box
-        alignItems="center"
-        display="flex"
-        flexDirection="column"
-        p={2}
-      >
-        <Avatar
-          className={classes.avatar}
-          component={RouterLink}
-          src={USERINFO.avatar}
-          to="/app/account"
-        />
-        <Typography
-          className={classes.name}
-          color="textPrimary"
-          variant="h5"
-        >
-          {USERINFO.name}
-        </Typography>
-        <Typography
-          color="textSecondary"
-          variant="body2"
-        >
-          {USERINFO.info}
-        </Typography>
+    <Box position="relative" width="100%" height="100%" overflow="hidden">
+      <Box height="100%" display="flex" flexDirection="column" className={classes.navContent} >
+        <Box alignItems="center" display="flex" flexDirection="column" p={2}>
+          <Avatar className={classes.avatar} src={USERINFO.avatar} onClick={changeTheme} />
+          <Typography className={classes.name} color="textPrimary" variant="h5" >
+            {USERINFO.name}
+          </Typography>
+          <Typography color="textSecondary" variant="body2">
+            {USERINFO.info}
+          </Typography>
+        </Box>
+        <Divider />
+        <Box p={2}>
+          <List>
+            {
+              NAVCONFIG.map((item) => (
+                <NavItem
+                  href={item.href}
+                  key={item.title}
+                  title={item.title}
+                  icon={item.icon}
+                  divider={item.divider}
+                />
+              ))
+            }
+          </List>
+        </Box>
       </Box>
-      <Divider />
-      <Box p={2}>
-        <List>
-          {NAVCONFIG.map((item) => (
-            <NavItem
-              href={item.href}
-              key={item.title}
-              title={item.title}
-              icon={item.icon}
-            />
-          ))}
-        </List>
-      </Box>
-      <Box flexGrow={1} />
-      <Box p={2} m={2} bgcolor="background.dark">
-      </Box>
-      <Box>
-        <script></script>
-      </Box>
+      <img src={sideBarNav}/>
     </Box>
   );
 

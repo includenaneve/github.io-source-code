@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core';
 import NavBar from './NavBar/index';
 import TopBar from './TopBar';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import { lightThemeConfig, darkThemeConfig, baseConfig } from './theme'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,25 +34,45 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const initTheme = createMuiTheme(baseConfig)
+
 const DashboardLayout = (props) => {
+  const [theme, setTheme] = useState(initTheme)
+  const [index, setIndex] = useState(0)
+
   const classes = useStyles();
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
 
+  const themeCache = useMemo(() => {
+    return [createMuiTheme(baseConfig), createMuiTheme(darkThemeConfig)]
+  }, [])
+
+  useEffect(() => {
+    setTheme(themeCache[index])
+  }, [index])
+
+  const changeTheme = () => {
+    setIndex((index + 1) % 2)
+  }
+
   return (
-    <div className={classes.root}>
-      <TopBar onMobileNavOpen={() => setMobileNavOpen(true)} />
-      <NavBar
-        onMobileClose={() => setMobileNavOpen(false)}
-        openMobile={isMobileNavOpen}
-      />
-      <div className={classes.wrapper}>
-        <div className={classes.contentContainer}>
-          <div className={classes.content}>
-            { props.children }
+    <MuiThemeProvider theme={theme}>
+      <div className={classes.root}>
+        <TopBar onMobileNavOpen={() => setMobileNavOpen(true)} changeTheme={changeTheme}/>
+        <NavBar
+          onMobileClose={() => setMobileNavOpen(false)}
+          openMobile={isMobileNavOpen}
+          changeTheme={changeTheme}
+        />
+        <div className={classes.wrapper}>
+          <div className={classes.contentContainer}>
+            <div className={classes.content}>
+              { props.children }
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </MuiThemeProvider>
   );
 };
 

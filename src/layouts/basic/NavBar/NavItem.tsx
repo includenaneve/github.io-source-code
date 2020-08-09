@@ -12,16 +12,11 @@ const useStyles = makeStyles((theme) => ({
   item: {
     display: 'flex',
     paddingTop: 0,
-    paddingBottom: 0
-  },
-  button: {
-    color: theme.palette.text.secondary,
-    fontWeight: theme.typography.fontWeightMedium,
-    justifyContent: 'flex-start',
-    letterSpacing: 0,
-    padding: '10px 8px',
-    textTransform: 'none',
-    width: '100%'
+    paddingBottom: 0,
+    '&:hover': {
+      background: '#00acc1',
+      color: '#fff'
+    },
   },
   icon: {
     marginRight: theme.spacing(1)
@@ -29,15 +24,6 @@ const useStyles = makeStyles((theme) => ({
   title: {
     marginRight: 'auto'
   },
-  active: {
-    color: theme.palette.primary.main,
-    '& $title': {
-      fontWeight: theme.typography.fontWeightMedium
-    },
-    '& $icon': {
-      color: theme.palette.primary.main
-    }
-  }
 }));
 
 const NavItem = ({
@@ -51,13 +37,10 @@ const NavItem = ({
 
   return (
     <ListItem
-      className={clsx(classes.item, className)}
       disableGutters
       {...rest}
     >
       <Button
-        activeClassName={classes.active}
-        className={classes.button}
         component={RouterLink}
         to={href}
       >
